@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>ToDo List Flask</h1>
+
+    <form action="{{ url_for('home') }}" class="input-container" method="POST">
+        <input type="text" placeholder="Enter ToDo" id="input-todo" name="todo_name" required>
+        <button id="add_todo" type="submit">+</button>
+    </form>
+
+    <h2>ToDos</h2>
+    <div class="todo_container">
+        {% for item in items %}
+        <div class="todo">
+            <p {% if item.checked %}style="text-decoration: line-through;"{% endif %}>
+                {{ item.name }}
+            </p>
+            <div class="actions">
+                <!-- Fixed extra spaces and formatting -->
+                <form action="{{ url_for('checked_todo', todo_id=item.id) }}" method="POST">
+                    <input type="checkbox" {% if item.checked %}checked{% endif %} onchange="this.form.submit()">
+                </form>
+
+                <form action="{{ url_for('delete_todo', todo_id=item.id) }}" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <footer>
+        <div class="Sushant_footer">
+            <p>Name:- Sushant <br> ToDo App By Sushant B Sharma <br>@copyright 2025 Sushant The devloper</p>
+        </div>
+    </footer>
+</body>
+</html>
